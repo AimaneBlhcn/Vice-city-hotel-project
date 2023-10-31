@@ -1,0 +1,85 @@
+{% block title %}{% endblock %}
+
+
+{% block stylesheets %}
+
+<style>
+* {
+    list-style: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+}
+
+
+h3 {
+
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.titre {
+
+display:flex;
+text-align: center;
+color: #E0B973;
+border-bottom: solid #E0B973 2px;
+margin-bottom: 50px;
+
+}
+
+</style>
+{% endblock %}
+
+
+{% block body %}
+
+<img src="{{ imageSrc }}" style="width: 200px;" alt="LogoViceCity">
+
+<div class="titre">
+    <h1>RECAPITULATIF DE RESERVATION</h1>
+</div>
+
+<div class="pdf">
+
+    {% for reservation in reservations %}
+
+    <h2>Cher, {{reservation.user.nom}} {{reservation.user.prenom}} </h2>
+
+    <p>Nous vous remercions d'avoir choisi Vice City Hôtel pour votre séjour.</p>
+
+    <p>Votre réservation est maintenant confirmée.</p>
+
+    <h3><u>Récapitulatif de votre réservation :</u></h3>
+
+    <p><b>Numéro de réservation:</b> {{reservation.id}}</p>
+    <p><b>Date de réservation:</b> {{reservation.DateReservation|date('d-m-y')}}</p>
+    <p><b>Date d'entrée:</b> {{reservation.DateEntree|date('d-m-y')}}</p>
+    <p><b>Date de sortie:</b> {{reservation.DateSortie|date('d-m-y')}}</p>
+    <p><b>Numéro de chambre:</b> {{reservation.chambre.id}}</p>
+    <p><b>Libelle chambre:</b> {{reservation.chambre.libelle}}</p>
+    <p><b>Tarif/nuit:</b> {{reservation.chambre.tarif}} €</p>
+    <p><b>Coordonées de l'hotel:</b>
+
+    <ul>
+        <li>Vice City Hotel</li>
+        <li>123 Ocean Boulevard</li>
+        <li>Miami, FL 33123</li>
+        <li>USA</li>
+    </ul>
+
+    </p>
+
+    <h3><U>Montant total du séjour : </U></h3>
+    <p><b>Montant total de la réservation:</b> {{nombreJours * reservation.chambre.tarif}} €</p>
+    <p><b>Moyen de paiement :</b> Carte bancaire</p>
+
+    <br>
+    <br>
+
+    <p>Cordialement</p>
+    <h4>Vice City Hotel</h4>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
